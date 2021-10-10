@@ -1,43 +1,35 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include "pch.h"
 #include "ConsoleHelper.h"
+#include "Board.h"
+#include "Player.h"
+
+Board board;
+Player player;
 
 int main()
 {
+	::srand(static_cast<unsigned int>(time(nullptr)));
+	board.Init(25, &player);
+	player.Init(&board);
+
 	uint64 lastTick = 0;
 	while (true)
 	{
-#pragma region ÇÁ·¹ÀÓ °ü¸®
+#pragma region í”„ë ˆì„ ê´€ë¦¬
 		const uint64 currentTick = ::GetTickCount64();
 		const uint64 deltaTick = currentTick - lastTick;
 		lastTick = currentTick;	
 #pragma endregion
 		
-		// ÀÔ·Â
+		// ì…ë ¥
 
 
-		// ·ÎÁ÷
+		// ë¡œì§
+		player.Update(deltaTick);
 
-
-		// ·»´õ¸µ
-
-
-
-		ConsoleHelper::SetCursorPosition(0, 0);
-		ConsoleHelper::ShowConsoleCursor(false);
-		ConsoleHelper::SetCursorColor(ConsoleColor::RED);
-
-		const char* TILE = "¡á";
-
-		for (int32 y = 0; y < 25; y++)
-		{
-			for (int32 x = 0; x < 25; x++)
-			{
-				cout << TILE;
-			}
-
-			cout << endl;
-		}
+		// ë Œë”ë§
+		board.Render();
 	}
 
 	return 0;
